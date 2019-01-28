@@ -1,7 +1,8 @@
 import React from 'react';
 import {StyleSheet, Text, View, TouchableOpacity, TextInput, KeyboardAvoidingView } from 'react-native';
-import {f, auth, database, storage } from '../../config/config.js';
+import {f, auth, db, storage } from '../../config/config.js';
 import UserAuth from '../folder/auth.js';
+
 
 class profile extends React.Component{
   constructor(props){
@@ -9,21 +10,34 @@ class profile extends React.Component{
     this.state = {
       loggedin: false
     }
+    
   }
   
   writeUserData(fname){
-    database.ref('Users/').set({fname}).then((data)=>{
+    db.ref('Users/').set({fname}).then((data)=>{
       //success callback
       console.log('data ' , data)
     }).catch((error)=>{
       //error callback
       console.log('error ' , error)
-  })
-}
+      })
+  }
+/*
+    readUserData() {
+      firebase.database().ref('Users/fname').on('value', function (snapshot) {
+        this.setState({fname: snapshot.val()})
+      });
+    }*/
   
   
   componentDidMount = () =>{
     var that = this;
+    
+    //Hello Katelynn
+    db.ref('Users/fname').on('value', function (snapshot) {
+      that.setState({fname: snapshot.val()})
+    });
+    
     f.auth().onAuthStateChanged(function(user){
       if(user){
         //logged in
@@ -37,7 +51,10 @@ class profile extends React.Component{
         });
       }
     });
+    
+    
   }
+
   
   logout = () => {
     auth.signOut();
@@ -76,8 +93,10 @@ class profile extends React.Component{
               ) : (
                    
                 <View>
-                  <Text>Profile</Text>
-                  <Text>Name</Text>
+                  <Text>Hello</Text>
+                  <Text>
+                   {this.state.fname}
+                  </Text>
                   <TouchableOpacity onPress={()=> this.editProfile()}>
                   <Text style={{color: 'black'}}>Edit Profile</Text>
                   </TouchableOpacity>

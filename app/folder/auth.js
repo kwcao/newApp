@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, Text, View, TouchableOpacity, TextInput, KeyboardAvoidingView } from 'react-native';
-import {f, auth, database, storage } from '../../config/config.js';
+import {f, auth, db, storage } from '../../config/config.js';
 
 
 class UserAuth extends React.Component{
@@ -12,6 +12,7 @@ class UserAuth extends React.Component{
       //moveScreen: false
     }
   }
+  
   
   login = async() => {
     //make user login
@@ -27,11 +28,10 @@ class UserAuth extends React.Component{
     }else{
       alert('please enter your email and password');
     }
-    
   }
   
   signup = async() => {
-    //make user login
+    
     var email = this.state.email;
     var password = this.state.password;
     if (email != '' && password != ''){
@@ -79,7 +79,7 @@ class UserAuth extends React.Component{
         value = {this.state.password}
         style = {{borderWidth:1, borderColor: 'black'}}
         />
-       
+           
         <TouchableOpacity onPress={()=> this.login()}>
         <Text style={{color: 'black'}}>Login</Text>
         </TouchableOpacity>
