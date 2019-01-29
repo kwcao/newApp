@@ -6,12 +6,14 @@ import {f, auth, db, storage } from './config/config.js';
 import feed from './app/screens/feed.js';
 import upload from './app/screens/upload.js';
 import profile from './app/screens/profile.js';
+import dm from './app/screens/dm.js';
 
 const MainTab = createAppContainer(createBottomTabNavigator(
 {
   Feed: {screen: feed},
   Upload: {screen: upload},
   Profile: {screen: profile},
+  Message: {screen: dm},
 }));
 
 const styles = StyleSheet.create({
